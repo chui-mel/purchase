@@ -4,12 +4,12 @@ import com.fiona.purchase.service.TestData;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FilledProductPurchase implements Comparable<FilledProductPurchase> {
   private final Product product;
   private final int amount;
   private Map<Supplier, Integer> supplierAmounts = new HashMap<>();
-  private boolean filled = false;
 
   public FilledProductPurchase(Product product, int amount) {
     this.product = product;
@@ -29,6 +29,16 @@ public class FilledProductPurchase implements Comparable<FilledProductPurchase> 
 
   public void addOneSupplier(Supplier supplier) {
     supplierAmounts.put(supplier, supplierAmounts.getOrDefault(supplier, 0) + 1);
+  }
+
+  public void addSupplierWithAmount(Supplier supplier, int amount) {
+    supplierAmounts.put(supplier, supplierAmounts.getOrDefault(supplier, 0) + amount);
+  }
+
+  public Map<Supplier, Double> valuePerSupplier() {
+    return TestData.stocks.get(product).stream().collect(
+        Collectors.toMap(ProductStock::getSupplier,
+            ps -> supplierAmounts.getOrDefault(ps.getSupplier(), 0) * ps.getCost()));
   }
 
   public Product getProduct() {
@@ -55,20 +65,13 @@ public class FilledProductPurchase implements Comparable<FilledProductPurchase> 
     return 1;
   }
 
-  public boolean isFilled() {
-    return filled;
-  }
-
-  public void setFilled(boolean filled) {
-    this.filled = filled;
-  }
-
   @Override
   public String toString() {
     return "FilledProductPurchase{" +
         "product=" + product +
         ", amount=" + amount +
         ", supplierAmounts=" + supplierAmounts +
+        ", cost= " + cost() +
         '}';
   }
 }

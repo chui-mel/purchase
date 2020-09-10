@@ -27,6 +27,25 @@ public class Supplier {
     return shippingCost;
   }
 
+  public double shippingCost(double value) {
+    if (value <= shippingCostMinOrderValue || value > shippingCostMaxOrderValue) {
+      return 0;
+    } else {
+      return shippingCost;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return "Supplier{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", shippingCost=" + shippingCost +
+        ", shippingCostMinOrderValue=" + shippingCostMinOrderValue +
+        ", shippingCostMaxOrderValue=" + shippingCostMaxOrderValue +
+        '}';
+  }
+
   public double getShippingCostMinOrderValue() {
     return shippingCostMinOrderValue;
   }

@@ -1,6 +1,6 @@
 package com.fiona.purchase.model;
 
-public class ProductStock {
+public class ProductStock implements Comparable<ProductStock>{
   private int id;
   private Product product;
   private Supplier supplier;
@@ -33,5 +33,10 @@ public class ProductStock {
 
   public double getCost() {
     return cost;
+  }
+
+  @Override
+  public int compareTo(ProductStock o) {
+    return stockOnHand >= o.stockOnHand ? 1 : -1;
   }
 }

@@ -31,7 +31,6 @@ public class PurchaseOptimizer {
     for (int i = 0 ; i <= quantity; i++) {
       dpCost[i] = new FilledProductPurchase(product, 0);
     }
-    dpCost[0].setFilled(true);
 
     for (int i = 1; i <= quantity; i++) {
       List<FilledProductPurchase> tmpResults = new ArrayList<>();
